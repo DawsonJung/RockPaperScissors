@@ -1,5 +1,7 @@
-# mtchat
-This repo contains programs to implement a multi-threaded TCP chat server and client 
+# Tic-Tac-Toe: Network Game Assignment
+#### Everett Yee and Dawson Jung
+
+This repo contains programs to implement a Tic-Tac-Toe game.
 
 * MtClient.java handles keyborad input from the user.
 * ClientListener.java recieves responses from the server and displays them
