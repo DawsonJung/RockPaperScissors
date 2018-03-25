@@ -20,6 +20,7 @@
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.net.SocketException;
 import java.io.InputStreamReader;
 
 import java.net.Socket;
@@ -51,13 +52,42 @@ public class MtClient {
       // Read input from the keyboard and send it to everyone else.
       // The only way to quit is to hit control-c, but a quit command
       // could easily be added.
+
+      System.out.println("Hello, welcome to Rock-Paper-Scissors!");
+      System.out.println();
+      System.out.println("How to play:");
+      System.out.println("Press 'r' to play Rock");
+      System.out.println("Press 'p' to play Paper");
+      System.out.println("Press 's' to play Scissors");
+      System.out.println();
+      System.out.println("Have fun!");
+      System.out.println();
+
       Scanner keyboard = new Scanner(System.in);
-      while (true) {
-        String data = keyboard.nextLine();
-        serverOutput.writeBytes(data + "\n");
+      String data = keyboard.nextLine();
+      boolean validInput = false;
+      while (validInput == false) {
+        if (data.equalsIgnoreCase("r") || data.equalsIgnoreCase("p") || data.equalsIgnoreCase("s")) {
+          validInput = true;
+        }
+        else {
+          System.out.println("Invalid input, try again:");
+          data = keyboard.nextLine();
+        }
       }
+
+      System.out.println("Sending to server...");
+      serverOutput.writeBytes(data + "\n");
+
+      String returnedData = listener.dataTransfer();
+      System.out.println("The result: " + returnedData);
+
+      //connectionSock.close();
+
+    } catch (SocketException ex) {
+      System.out.println("Socket closed, goodbye!");
     } catch (IOException e) {
       System.out.println(e.getMessage());
     }
   }
-} // MtClient
+}
