@@ -50,23 +50,26 @@ public class ClientListener implements Runnable {
     //   System.out.println("Error: " + e.toString());
     // }
   }
-
+  /**
+   * Transfers the input for determining winner.
+   */
+   
   public String dataTransfer() {
     String theData = "";
     try {
       BufferedReader serverInput = new BufferedReader(
           new InputStreamReader(connectionSock.getInputStream()));
 
-        // Get data sent from the server
-        String serverText = serverInput.readLine();
-        if (serverInput != null) {
-          theData = serverText;
-        } else {
-          // Connection was lost
-          System.out.println("Closing connection for: " + connectionSock);
-          connectionSock.close();
-          //break;
-        }
+      // Get data sent from the server
+      String serverText = serverInput.readLine();
+      if (serverInput != null) {
+        theData = serverText;
+      } else {
+        // Connection was lost
+        System.out.println("Closing connection for: " + connectionSock);
+        connectionSock.close();
+        //break;
+      }
 
     } catch (Exception e) {
       System.out.println("Error: " + e.toString());

@@ -20,11 +20,9 @@
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.net.SocketException;
 import java.io.InputStreamReader;
-
 import java.net.Socket;
-
+import java.net.SocketException;
 import java.util.Scanner;
 
 public class MtClient {
@@ -74,7 +72,8 @@ public class MtClient {
 
         boolean validInput = false;
         while (validInput == false) {
-          if (data.equalsIgnoreCase("r") || data.equalsIgnoreCase("p") || data.equalsIgnoreCase("s") || data.equalsIgnoreCase("q")) {
+          if (data.equalsIgnoreCase("r") || data.equalsIgnoreCase("p")
+              || data.equalsIgnoreCase("s") || data.equalsIgnoreCase("q")) {
             validInput = true;
           } else {
             System.out.println("Invalid input, try again:");
@@ -85,10 +84,10 @@ public class MtClient {
         serverOutput.writeBytes(data + "\n");
 
         if (data.equalsIgnoreCase("q")) {
-         System.out.println("Disconnecting...thanks for playing!");
-         controller = false;
-         //connectionSock.close();
-         break;
+          System.out.println("Disconnecting...thanks for playing!");
+          controller = false;
+          //connectionSock.close();
+          break;
         }
 
         System.out.println("Please wait for the other player to finish their turn :)" + "\n");
@@ -106,26 +105,19 @@ public class MtClient {
         //Rock and Paper
         if (data.equalsIgnoreCase("r") && returnedData.equalsIgnoreCase("p")) {
           System.out.println("Paper wins!");
-        }
-        else if (returnedData.equalsIgnoreCase("r") && data.equalsIgnoreCase("p")) {
+        } else if (returnedData.equalsIgnoreCase("r") && data.equalsIgnoreCase("p")) {
           System.out.println("Paper wins!");
-        }
-        //Paper and Scissors
-        else if (data.equalsIgnoreCase("p") && returnedData.equalsIgnoreCase("s")) {
+        } else if (data.equalsIgnoreCase("p")
+            && returnedData.equalsIgnoreCase("s")) { //Paper and Scissors
           System.out.println("Scissors wins!");
-        }
-        else if (returnedData.equalsIgnoreCase("p") && data.equalsIgnoreCase("s")) {
+        } else if (returnedData.equalsIgnoreCase("p") && data.equalsIgnoreCase("s")) {
           System.out.println("Scissors wins!");
-        }
-        //Rock and Scissors
-        else if (data.equalsIgnoreCase("r") && returnedData.equalsIgnoreCase("s")) {
+        } else if (data.equalsIgnoreCase("r")
+            && returnedData.equalsIgnoreCase("s")) { //Rock and Scissors
           System.out.println("Rock wins!");
-        }
-        else if (returnedData.equalsIgnoreCase("r") && data.equalsIgnoreCase("s")) {
+        } else if (returnedData.equalsIgnoreCase("r") && data.equalsIgnoreCase("s")) {
           System.out.println("Rock wins!");
-        }
-        //Tie
-        else if (data.equalsIgnoreCase(returnedData)) {
+        } else if (data.equalsIgnoreCase(returnedData)) { //Tie
           System.out.println("It's a tie!");
         }
         round++;
