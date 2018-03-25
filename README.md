@@ -1,12 +1,17 @@
-# Tic-Tac-Toe: Network Game Assignment
+# Rock-Paper-Scissors: Network Game Assignment
 #### Everett Yee and Dawson Jung
 
-This repo contains programs to implement a Tic-Tac-Toe game.
+This repo contains programs to implement a Rock-Paper-Scissors game.
 
-* MtClient.java handles keyborad input from the user.
-* ClientListener.java recieves responses from the server and displays them
-* MtServer.java listens for client connections and creates a ClientHandler for each new client
-* ClientHandler.java recieves messages from a client and relays it to the other clients.
+* MtClient.java handles user input, users can enter r, p, s, or q.
+* ClientListener.java receives responses from the server and transfers them to clients.
+* MtServer.java listens for client connections and creates a ClientHandler for each new client.
+* ClientHandler.java receives messages from a client and relays it to the other clients.
+
+Contributions:
+
+* Dawson: data transfer method, round counter, input validation  
+* Everett: game outcomes, quit function, small "friendliness" improvements
 
 To package the client and server in Docker containers:
 
@@ -14,8 +19,7 @@ To package the client and server in Docker containers:
 * Copy the MtServer.class and ClientHandler.class files to the server subdirectory
 
 * In the client subdirectory, to create the client Docker image use:
-	docker image build -t client . 
+	docker image build -t client .
 
 * In the server subdirectory, to create the server Docker image use:
 	docker image build -t server .
-
