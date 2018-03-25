@@ -1,19 +1,19 @@
 /**
  * MTClient.java
  *
- * This program implements a simple multithreaded chat client.  It connects to the
- * server (assumed to be localhost on port 7654) and starts two threads:
+ * By: Dawson Jung and Everett Yee
+ *
+ * This program implements a multithreaded client for rock-paper-scissors.
+ * It connects to the server (assumed to be localhost on port 7654) and starts two threads:
  * one for listening for data sent from the server, and another that waits
  * for the user to type something in that will be sent to the server.
- * Anything sent to the server is broadcast to all clients.
+ * Anything sent to the server is not broadcasted to other clients, as that
+ * would defeat the purpose of the game.
  *
  * The MTClient uses a ClientListener whose code is in a separate file.
  * The ClientListener runs in a separate thread, recieves messages form the server,
  * and displays them on the screen.
  *
- * Data received is sent to the output screen, so it is possible that as
- * a user is typing in information a message from the server will be
- * inserted.
  *
  */
 
@@ -42,47 +42,41 @@ public class MtClient {
 
       DataOutputStream serverOutput = new DataOutputStream(connectionSock.getOutputStream());
 
-      System.out.println("Connection made.");
+      System.out.println("Connection successfully made." + "\n");
 
       // Start a thread to listen and display data sent by the server
       ClientListener listener = new ClientListener(connectionSock);
       Thread theThread = new Thread(listener);
       theThread.start();
 
-      // Read input from the keyboard and send it to everyone else.
-      // The only way to quit is to hit control-c, but a quit command
-      // could easily be added.
-
-      System.out.println("Hello, welcome to Rock-Paper-Scissors!");
-      System.out.println();
+      System.out.println("Hello, welcome to Rock-Paper-Scissors!" + "\n");
       System.out.println("How to play:");
       System.out.println("Press 'r' to play Rock");
       System.out.println("Press 'p' to play Paper");
       System.out.println("Press 's' to play Scissors");
-      System.out.println();
-      System.out.println("Have fun!");
-      System.out.println();
+      System.out.println("Press 'q' to quit" + "\n");
+      System.out.println("Have fun!" + "\n");
 
       boolean controller = true;
       int round = 1;
 
       while (controller == true) {
-        System.out.println("Round " + round);
+        System.out.println("Round " + round + " Enter your move:");
         Scanner keyboard = new Scanner(System.in);
         String data = keyboard.nextLine();
-        if (data.equalsIgnoreCase("q")) {
-          System.out.println("Exiting Program. Goodbye!");
-          controller = false;
-          serverOutput.writeBytes(data + "\n");
-          break;
-        }
+        // if (data.equalsIgnoreCase("q")) {
+        //   System.out.println("Exiting Program. Goodbye!");
+        //   controller = false;
+        //   serverOutput.writeBytes(data + "\n");
+        //   System.out.println("data sent");
+        //   //break;
+        // }
 
         boolean validInput = false;
         while (validInput == false) {
-          if (data.equalsIgnoreCase("r") || data.equalsIgnoreCase("p") || data.equalsIgnoreCase("s")) {
+          if (data.equalsIgnoreCase("r") || data.equalsIgnoreCase("p") || data.equalsIgnoreCase("s") || data.equalsIgnoreCase("q")) {
             validInput = true;
-          }
-          else {
+          } else {
             System.out.println("Invalid input, try again:");
             data = keyboard.nextLine();
           }
@@ -90,16 +84,22 @@ public class MtClient {
 
         serverOutput.writeBytes(data + "\n");
 
-        System.out.println("Please wait for the other player to finish their turn :)");
+        if (data.equalsIgnoreCase("q")) {
+         System.out.println("Disconnecting...thanks for playing!");
+         controller = false;
+         //connectionSock.close();
+         break;
+        }
+
+        System.out.println("Please wait for the other player to finish their turn :)" + "\n");
 
         String returnedData = listener.dataTransfer();
         //System.out.println("The result: " + returnedData);
 
         if (returnedData.equalsIgnoreCase("q")) {
-          System.out.println();
-          System.out.println();
           System.out.println("The other user has disconnected. Thanks for playing!");
-          System.out.println("Goodbye!");
+          controller = false;
+          //connectionSock.close();
           break;
         }
 

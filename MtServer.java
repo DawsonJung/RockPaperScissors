@@ -1,9 +1,13 @@
 /**
  * MTServer.java
  *
- * This program implements a simple multithreaded chat server.  Every client that
- * connects to the server can broadcast data to all other clients.
- * The server stores an ArrayList of sockets to perform the broadcast.
+ * By: Dawson Jung and Everett Yee
+ * This program implements a multithreaded rock-paper-scissors server.
+ *
+ * Once a client connects, the server displays it in the server window. When
+ * a client enters their input (r,p, or s) it is sent to the server, but
+ * not to the other client. Once both clients input their choices,
+ * the server then broadcasts to both clients who won the match.
  *
  * The MTServer uses a ClientHandler whose code is in a separate file.
  * When a client connects, the MTServer starts a ClientHandler in a separate thread
@@ -35,7 +39,8 @@ public class MtServer {
   private void getConnection() {
     // Wait for a connection from the client
     try {
-      System.out.println("Waiting for client connections on port 7654.");
+      System.out.println("Rock-Paper-Scissors server starting...");
+      System.out.println("Waiting for client connections on port 7654...");
       ServerSocket serverSock = new ServerSocket(7654);
       // This is an infinite loop, the user will have to shut it down
       // using control-c
@@ -48,8 +53,6 @@ public class MtServer {
         Thread theThread = new Thread(handler);
         theThread.start();
       }
-      // Will never get here, but if the above loop is given
-      // an exit condition then we'll go ahead and close the socket
       //serverSock.close();
     } catch (IOException e) {
       System.out.println(e.getMessage());

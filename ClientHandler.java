@@ -33,14 +33,14 @@ public class ClientHandler implements Runnable {
    */
   public void run() {
     try {
-      System.out.println("Connection made with socket " + connectionSock);
+      System.out.println("Connection made with: " + connectionSock);
       BufferedReader clientInput = new BufferedReader(
           new InputStreamReader(connectionSock.getInputStream()));
       while (true) {
         // Get data sent from a client
         String clientText = clientInput.readLine();
         if (clientText != null) {
-          System.out.println("Received: " + clientText);
+          System.out.println("Received from client: " + clientText);
           // Turn around and output this data
           // to all other clients except the one
           // that sent us this information
@@ -52,7 +52,7 @@ public class ClientHandler implements Runnable {
           }
         } else {
           // Connection was lost
-          System.out.println("Closing connection for socket " + connectionSock);
+          System.out.println("Closing connection for: " + connectionSock);
           // Remove from arraylist
           socketList.remove(connectionSock);
           connectionSock.close();

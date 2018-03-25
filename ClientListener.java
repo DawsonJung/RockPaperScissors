@@ -1,8 +1,11 @@
 /**
  * ClientListener.java
  *
- * This class runs on the client end and just
- * displays any text received from the server.
+ * By: Dawson Jung and Everett Yee
+ *
+ * This class runs on the client end and transfers the input
+ * from a client to the server, so that the server can then
+ * determine a winner.
  *
  */
 
@@ -60,7 +63,7 @@ public class ClientListener implements Runnable {
           theData = serverText;
         } else {
           // Connection was lost
-          System.out.println("Closing connection for socket " + connectionSock);
+          System.out.println("Closing connection for: " + connectionSock);
           connectionSock.close();
           //break;
         }
