@@ -63,27 +63,67 @@ public class MtClient {
       System.out.println("Have fun!");
       System.out.println();
 
-      Scanner keyboard = new Scanner(System.in);
-      String data = keyboard.nextLine();
-      boolean validInput = false;
-      while (validInput == false) {
-        if (data.equalsIgnoreCase("r") || data.equalsIgnoreCase("p") || data.equalsIgnoreCase("s")) {
-          validInput = true;
+      boolean controller = true;
+      int round = 1;
+
+      while (controller == true) {
+        System.out.println("Round " + round);
+        Scanner keyboard = new Scanner(System.in);
+        String data = keyboard.nextLine();
+        if (data.equalsIgnoreCase("q")) {
+          System.out.println("Exiting Program. Goodbye!");
+          controller = false;
+          break;
         }
-        else {
-          System.out.println("Invalid input, try again:");
-          data = keyboard.nextLine();
+
+        boolean validInput = false;
+        while (validInput == false) {
+          if (data.equalsIgnoreCase("r") || data.equalsIgnoreCase("p") || data.equalsIgnoreCase("s")) {
+            validInput = true;
+          }
+          else {
+            System.out.println("Invalid input, try again:");
+            data = keyboard.nextLine();
+          }
         }
+
+        serverOutput.writeBytes(data + "\n");
+
+        System.out.println("Please wait for the other player to finish their turn :)");
+
+        String returnedData = listener.dataTransfer();
+        //System.out.println("The result: " + returnedData);
+
+        //Rock and Paper
+        if (data.equalsIgnoreCase("r") && returnedData.equalsIgnoreCase("p")) {
+          System.out.println("Paper wins!");
+        }
+        else if (returnedData.equalsIgnoreCase("r") && data.equalsIgnoreCase("p")) {
+          System.out.println("Paper wins!");
+        }
+        //Paper and Scissors
+        else if (data.equalsIgnoreCase("p") && returnedData.equalsIgnoreCase("s")) {
+          System.out.println("Scissors wins!");
+        }
+        else if (returnedData.equalsIgnoreCase("p") && data.equalsIgnoreCase("s")) {
+          System.out.println("Scissors wins!");
+        }
+        //Rock and Scissors
+        else if (data.equalsIgnoreCase("r") && returnedData.equalsIgnoreCase("s")) {
+          System.out.println("Rock wins!");
+        }
+        else if (returnedData.equalsIgnoreCase("r") && data.equalsIgnoreCase("s")) {
+          System.out.println("Rock wins!");
+        }
+        //Tie
+        else if (data.equalsIgnoreCase(returnedData)) {
+          System.out.println("It's a tie!");
+        }
+
+        round++;
+        System.out.println();
       }
-
-      System.out.println("Sending to server...");
-      serverOutput.writeBytes(data + "\n");
-
-      String returnedData = listener.dataTransfer();
-      System.out.println("The result: " + returnedData);
-
-      //connectionSock.close();
-
+      connectionSock.close();
     } catch (SocketException ex) {
       System.out.println("Socket closed, goodbye!");
     } catch (IOException e) {

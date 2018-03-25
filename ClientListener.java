@@ -55,11 +55,9 @@ public class ClientListener implements Runnable {
           new InputStreamReader(connectionSock.getInputStream()));
 
         // Get data sent from the server
-        System.out.println("Inside Data Transfer");
         String serverText = serverInput.readLine();
         if (serverInput != null) {
           theData = serverText;
-          System.out.println("Transferring: " + theData);
         } else {
           // Connection was lost
           System.out.println("Closing connection for socket " + connectionSock);
