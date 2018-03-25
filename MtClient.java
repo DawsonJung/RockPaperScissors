@@ -73,6 +73,7 @@ public class MtClient {
         if (data.equalsIgnoreCase("q")) {
           System.out.println("Exiting Program. Goodbye!");
           controller = false;
+          serverOutput.writeBytes(data + "\n");
           break;
         }
 
@@ -93,6 +94,14 @@ public class MtClient {
 
         String returnedData = listener.dataTransfer();
         //System.out.println("The result: " + returnedData);
+
+        if (returnedData.equalsIgnoreCase("q")) {
+          System.out.println();
+          System.out.println();
+          System.out.println("The other user has disconnected. Thanks for playing!");
+          System.out.println("Goodbye!");
+          break;
+        }
 
         //Rock and Paper
         if (data.equalsIgnoreCase("r") && returnedData.equalsIgnoreCase("p")) {
@@ -119,7 +128,6 @@ public class MtClient {
         else if (data.equalsIgnoreCase(returnedData)) {
           System.out.println("It's a tie!");
         }
-
         round++;
         System.out.println();
       }
