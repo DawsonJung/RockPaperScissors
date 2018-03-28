@@ -28,32 +28,15 @@ public class ClientListener implements Runnable {
   }
 
   /**
-   * Gets message from server and dsiplays it to the user.
+   * Repurposed to be used to initialize.
    */
-  public void run() {
-    // try {
-    //   BufferedReader serverInput = new BufferedReader(
-    //       new InputStreamReader(connectionSock.getInputStream()));
-    //   while (true) {
-    //     // Get data sent from the server
-    //     String serverText = serverInput.readLine();
-    //     if (serverInput != null) {
-    //       System.out.println(serverText);
-    //     } else {
-    //       // Connection was lost
-    //       System.out.println("Closing connection for socket " + connectionSock);
-    //       connectionSock.close();
-    //       break;
-    //     }
-    //   }
-    // } catch (Exception e) {
-    //   System.out.println("Error: " + e.toString());
-    // }
-  }
+  public void run() {}
+
   /**
-   * Transfers the input for determining winner.
+   * Returns data from the server in this method
+   * used to send the other user's action to the client.
+   * @return String returned from server
    */
-   
   public String dataTransfer() {
     String theData = "";
     try {
@@ -77,6 +60,4 @@ public class ClientListener implements Runnable {
 
     return theData;
   }
-
-
 } // ClientListener for MtClient

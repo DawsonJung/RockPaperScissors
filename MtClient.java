@@ -62,13 +62,6 @@ public class MtClient {
         System.out.println("Round " + round + " Enter your move:");
         Scanner keyboard = new Scanner(System.in);
         String data = keyboard.nextLine();
-        // if (data.equalsIgnoreCase("q")) {
-        //   System.out.println("Exiting Program. Goodbye!");
-        //   controller = false;
-        //   serverOutput.writeBytes(data + "\n");
-        //   System.out.println("data sent");
-        //   //break;
-        // }
 
         boolean validInput = false;
         while (validInput == false) {
@@ -98,7 +91,6 @@ public class MtClient {
         if (returnedData.equalsIgnoreCase("q")) {
           System.out.println("The other user has disconnected. Thanks for playing!");
           controller = false;
-          //connectionSock.close();
           break;
         }
 
